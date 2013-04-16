@@ -33,7 +33,7 @@ response.set('Content-Type', 'text/html');
 response.send();
 });
 
-app.get('/submit.json', function (request, response) {
+app.get('/highscores.json, function (request, response) {
 
 /*response.header('Access-Control-Allow-Origin', '*');
 request.header('Access-Control-Allow-Headers', 'X-Requested-With');
