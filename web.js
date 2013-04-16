@@ -34,26 +34,29 @@ response.send();
 
 app.get('/submit.json', function (request, response) {
 
-response.header('Access-Control-Allow-Origin', '*');
+/*response.header('Access-Control-Allow-Origin', '*');
 request.header('Access-Control-Allow-Headers', 'X-Requested-With');
 var game_title = request.query["game_title"];
 var score = request.query["score"];
 
 db.collection("High Scores", function(err,collection){
 collection.find("game_title":game_title); //How do you list these
-
+*/
 });
 
 app.get('/data.json', function(request, response) {
-response.header('Access-Control-Allow-Origin', '*');
+/*response.header('Access-Control-Allow-Origin', '*');
 request.header('Access-Control-Allow-Headers', 'X-Requested-With');
 	response.set('Content-Type', 'text/json');
 	response.send('{"status":"good"}');
+	
+	*/
 });
 
 app.get('/fool', function(request, response) {
-	response.set('Content-Type', 'text/html');
+/*	response.set('Content-Type', 'text/html');
 	response.send(500, 'Something broke!');
+	*/
 });
 
 // Oh joy! http://stackoverflow.com/questions/15693192/heroku-node-js-error-web-process-failed-to-bind-to-port-within-60-seconds-of
