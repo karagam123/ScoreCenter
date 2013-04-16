@@ -24,7 +24,7 @@ var score = request.body.score;
 var game_title = request.body.game_title;
 var time_played = Date();
 
-db.collection("High Scores", function(er,collection )){
+db.collection("highscores", function(er,collection )){
 
 db.collection.insert( { "username": player_name, "score": score, "created_at": time_played, "game_title":game_title } );}
 
@@ -39,7 +39,7 @@ request.header('Access-Control-Allow-Headers', 'X-Requested-With');
 var game_title = request.query["game_title"];
 var score = request.query["score"];
 
-db.collection("High Scores", function(err,collection){
+db.collection("highscores", function(err,collection){
 collection.find("game_title":game_title); //How do you list these
 */
 });
