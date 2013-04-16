@@ -26,7 +26,7 @@ var time_played = Date();
 
 db.collection("highscores", function(err,collection ){
 
-db.collection.insert( { "username": player_name, "score": score, "created_at": time_played, "game_title":game_title });
+collection.insert( { "username": player_name, "score": score, "created_at": time_played, "game_title":game_title });
 });
 
 response.set('Content-Type', 'text/html');
