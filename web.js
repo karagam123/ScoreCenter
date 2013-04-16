@@ -14,18 +14,39 @@ var db = mongo.Db.connect(mongoUri, function (error, databaseConnection) {
 });
 
 
-app.post
+app.post('/submit.json', function(request,response){
 
-app.get('/', function (request, response) {
-	/*
-		db.collection('NAME_OF_YOUR_COLLECTON_HERE...', function(er, collection) {
-			collection.find()...
-	*/
-	response.set('Content-Type', 'text/html');
-	response.send('<p>Hi!</p>');
+response.header('Access-Control-Allow-Origin', '*');
+request.header('Access-Control-Allow-Headers', 'X-Requested-With');
+
+var player_name = request.body.username;
+var score = request.body.score;
+var game_title = request.body.game_title;
+var time_played = Date();
+
+db.collection("High Scores", function(er,collection )){
+
+db.collection.insert( { "username": player_name, "score": score, "created_at": time_played, "game_title":game_title } );}
+
+response.set('Content-Type', 'text/html');
+response.send();
+	}
+
+app.get('/submit.json', function (request, response) {
+
+response.header('Access-Control-Allow-Origin', '*');
+request.header('Access-Control-Allow-Headers', 'X-Requested-With');
+var game_title = request.query["game_title"];
+var score = request.query["score"];
+
+db.collection("High Scores", function(err,collection){
+collection.find("game_title":game_title); //How do you list these
+
 });
 
 app.get('/data.json', function(request, response) {
+response.header('Access-Control-Allow-Origin', '*');
+request.header('Access-Control-Allow-Headers', 'X-Requested-With');
 	response.set('Content-Type', 'text/json');
 	response.send('{"status":"good"}');
 });
