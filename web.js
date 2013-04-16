@@ -24,7 +24,7 @@ var score = request.body.score;
 var game_title = request.body.game_title;
 var time_played = Date();
 
-db.collection("highscores", function(er,collection ){
+db.collection("highscores", function(err,collection ){
 
 db.collection.insert( { "username": player_name, "score": score, "created_at": time_played, "game_title":game_title });
 });
