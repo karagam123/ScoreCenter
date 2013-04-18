@@ -14,51 +14,69 @@ var db = mongo.Db.connect(mongoUri, function (error, databaseConnection) {
 });
 
 
-app.post('/submit.json', function(request,response){
+
+app.post('/submit.json', function(request, response){
+	response.header('Access-Control-Allow-Origin', '*');
+	request.header('Access-Control-Allow-Headers', 'X-Requested-With');
+	
+	var username=request.body.username;
+	var score=request.body.score;
+	var game_title=request.body.game_title;
+	var created_at=Date();
+ 	
+	db.collection("highscores", function(error, collection){
+		collection.insert({'game_title':game_title, 'username': username, 'score':score, 'created_at': created_at});
+	});
+	response.set('Content-Type', 'text/html');
+	response.send();
+});
+
+
+
+app.get('/highscores.json', function(request, response) { //top ten in game
+	response.header('Access-Control-Allow-Origin','*');
+	request.header('Access-Control-Allow-Headers', 'X-Requested-With');
+	
+	var game_title=request.query['game_title'];
+	var score=Number(request.body.score);
+	
+	db.collection('highscores', function(err, collection){
+		collection.find({'game_title':game_title}).sort(score:-1).limit(10).toArray(function(err, documents){	
+			console.log(documents);	
+			response.set('Content-Type', 'text/json');
+			response.send(documents);
+		});
+	});
+});
+
+//line up bracketss
+
+
+
+
+app.get('/', function(request, response) {
+//lists all
 
 response.header('Access-Control-Allow-Origin', '*');
 request.header('Access-Control-Allow-Headers', 'X-Requested-With');
 
-var player_name = request.body.username;
-var score = request.body.score;
-var game_title = request.body.game_title;
-var time_played = Date();
-
-db.collection("highscores", function(err,collection ){
-
-collection.insert( { "username": player_name, "score": score, "created_at": time_played, "game_title":game_title });
-});
-
-response.set('Content-Type', 'text/html');
-response.send();
-});
-
-app.get('/highscores.json, function (request, response) {
-
-/*response.header('Access-Control-Allow-Origin', '*');
-request.header('Access-Control-Allow-Headers', 'X-Requested-With');
-var game_title = request.query["game_title"];
-var score = request.query["score"];
 
 db.collection("highscores", function(err,collection){
-collection.find("game_title":game_title); //How do you list these
-*/
-});
+collection.find().toArray(function(err,items){
+    response.set('Content-Type', 'text/json');
+	response.send(items);
 
-app.get('/data.json', function(request, response) {
-/*response.header('Access-Control-Allow-Origin', '*');
-request.header('Access-Control-Allow-Headers', 'X-Requested-With');
-	response.set('Content-Type', 'text/json');
-	response.send('{"status":"good"}');
-	
-	*/
 });
+}}
 
-app.get('/fool', function(request, response) {
+
+
+app.get('/fool', function(request, response) { 
 /*	response.set('Content-Type', 'text/html');
 	response.send(500, 'Something broke!');
 	*/
 });
+
 
 // Oh joy! http://stackoverflow.com/questions/15693192/heroku-node-js-error-web-process-failed-to-bind-to-port-within-60-seconds-of
 app.listen(process.env.PORT || 3000);
