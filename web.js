@@ -9,7 +9,7 @@ var mongoUri = process.env.MONGOLAB_URI ||
   process.env.MONGOHQ_URL || 
   'mongodb://localhost/scorecenter';
 var mongo = require('mongodb');
-var db = mongo.Db.connect(mongoUri, function (error, databaseConnection) {
+var db = mongo.Db.connect(mongoUri, function (err, databaseConnection) {
 	db = databaseConnection;
 });
 
@@ -24,7 +24,7 @@ app.post('/submit.json', function(request, response){ //posts all scores
 	var game_title=request.body.game_title;
 	var created_at=Date();
  	
-	db.collection("highscores", function(error, collection){
+	db.collection("highscores", function(err, collection){
 		collection.insert({'game_title':game_title, 'username': username, 'score':score, 'created_at': created_at});
 	});
 	response.set('Content-Type', 'text/html');
@@ -42,7 +42,6 @@ app.get('/highscores.json', function(request, response) { //top ten in game
 	
 	db.collection('highscores', function(err, collection){
 		collection.find({'game_title':game_title}).sort(score:-1).limit(10).toArray(function(err, documents){	
-			console.log(documents);	
 			response.set('Content-Type', 'text/json');
 			response.send(documents);
 		});
@@ -60,6 +59,37 @@ app.get('/', function (request, response) { //lists all scores
 		});
 	});
 });
+
+
+app.get('/usersearch',function(request,response){ //need this to take input and redirect to page which shows scores of person searched
+response.header('Access-Control-Allow-Origin','*');
+	request.header('Access-Control-Allow-Headers', 'X-Requested-With');
+	
+
+	//html string heree
+			response.set('Content-Type', 'text/json');
+			response.send(documents);
+		});
+	});
+});
+
+
+
+app.post('/playerscore,function(request,response){
+ //posts the scores of the person searched
+ response.header('Access-Control-Allow-Origin','*');
+	request.header('Access-Control-Allow-Headers', 'X-Requested-With');
+	
+	var username = request.body.username;
+	db.collection('highscores', function(err, collection){
+		collection.find({'username':username}).toArray(function(err, documents){
+			response.set('Content-Type', 'text/json');
+			response.send(documents);
+		});
+	});
+	
+
+
 
 app.get('/fool', function(request, response) { 
 /*	response.set('Content-Type', 'text/html');
