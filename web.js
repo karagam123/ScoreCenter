@@ -49,8 +49,7 @@ app.get('/highscores.json', function(request, response) { //top ten in game
 	});
 });
 
-//line up bracketss
-
+/*
 
 
 
