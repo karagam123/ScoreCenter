@@ -65,8 +65,8 @@ app.get('/usersearch',function(request,response){ //need this to take input and 
 response.header('Access-Control-Allow-Origin','*');
 	request.header('Access-Control-Allow-Headers', 'X-Requested-With');
 	
-
-	//html string heree
+var str = '<form action= "http://arcane-sea-8850.herokuapp.com/playerscore" method="post"> Username: <input type="text" name="username"><input type="submit" value="Submit"> onclick = "<script> window.location.assign("http://arcane-sea-8850.herokuapp.com/playerscore") </script>" </form>'
+	
 			response.set('Content-Type', 'text/json');
 			response.send(documents);
 		});
