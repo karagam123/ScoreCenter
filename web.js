@@ -15,7 +15,7 @@ var db = mongo.Db.connect(mongoUri, function (error, databaseConnection) {
 
 
 
-app.post('/submit.json', function(request, response){
+app.post('/submit.json', function(request, response){ //posts all scores
 	response.header('Access-Control-Allow-Origin', '*');
 	request.header('Access-Control-Allow-Headers', 'X-Requested-With');
 	
@@ -49,26 +49,17 @@ app.get('/highscores.json', function(request, response) { //top ten in game
 	});
 });
 
-/*
-
-
-
-app.get('/', function(request, response) {
-//lists all
-
-response.header('Access-Control-Allow-Origin', '*');
-request.header('Access-Control-Allow-Headers', 'X-Requested-With');
-
-
-db.collection("highscores", function(err,collection){
-collection.find().toArray(function(err,items){
-    response.set('Content-Type', 'text/json');
-	response.send(items);
-
+app.get('/', function (request, response) { //lists all scores
+	response.header('Access-Control-Allow-Origin','*');
+	request.header('Access-Control-Allow-Headers', 'X-Requested-With');
+	
+	db.collection('highscores', function(err, collection){
+		collection.find().toArray(function(err, documents){
+			response.set('Content-Type', 'text/json');
+			response.send(documents);
+		});
+	});
 });
-}}
-
-
 
 app.get('/fool', function(request, response) { 
 /*	response.set('Content-Type', 'text/html');
