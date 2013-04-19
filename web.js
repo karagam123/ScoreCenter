@@ -24,7 +24,7 @@ app.post('/submit.json', function(request, response){ //posts all scores
 	var game_title=request.body.game_title;
 	var created_at=Date();
  	
-	db.collection('highscores', function(err, collection){
+	db.collection('highscores', function(error, collection){
 		collection.insert({'game_title':game_title, 'username': username, 'score':score, 'created_at': created_at});
 	});
 	response.send();
@@ -46,20 +46,22 @@ app.get('/highscores.json', function(request, response) { //top ten in game
 		});
 	});
 });
-
+*/
 app.get('/', function (request, response) { //lists all scores
 	response.header('Access-Control-Allow-Origin','*');
 	request.header('Access-Control-Allow-Headers', 'X-Requested-With');
-	
-	db.collection('highscores', function(err, collection){
+	response.set('Content-Type', text/html);
+	response.send('<p>hi</p>');
+	/*db.collection('highscores', function(err, collection){
 		collection.find().toArray(function(err, documents){
 			response.set('Content-Type', 'text/json');
 			response.send(documents);
 		});
 	});
+	*/
 });
 
-
+/*
 app.get('/usersearch',function(request,response){ //need this to take input and redirect to page which shows scores of person searched
 response.header('Access-Control-Allow-Origin','*');
 	request.header('Access-Control-Allow-Headers', 'X-Requested-With');
@@ -74,7 +76,7 @@ var str = '<form action= "http://arcane-sea-8850.herokuapp.com/playerscore" meth
 
 
 
-app.post('/playerscore,function(request,response){
+app.post('/playerscore',function(request,response){
  //posts the scores of the person searched
  response.header('Access-Control-Allow-Origin','*');
 	request.header('Access-Control-Allow-Headers', 'X-Requested-With');
@@ -99,3 +101,4 @@ app.get('/fool', function(request, response) {
 
 // Oh joy! http://stackoverflow.com/questions/15693192/heroku-node-js-error-web-process-failed-to-bind-to-port-within-60-seconds-of
 app.listen(process.env.PORT || 3000);
+*/
