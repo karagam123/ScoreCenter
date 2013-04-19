@@ -30,7 +30,7 @@ app.post('/submit.json', function(request, response){ //posts all scores
 	response.send();
 });
 
-
+/*
 
 app.get('/highscores.json', function(request, response) { //top ten in game
 	response.header('Access-Control-Allow-Origin','*');
