@@ -16,18 +16,17 @@ var db = mongo.Db.connect(mongoUri, function (err, databaseConnection) {
 
 
 app.post('/submit.json', function(request, response){ //posts all scores
-	response.header('Access-Control-Allow-Origin', '*');
-	request.header('Access-Control-Allow-Headers', 'X-Requested-With');
+	response.header("Access-Control-Allow-Origin", "*");
+	request.header("Access-Control-Allow-Headers", "X-Requested-With");
 	
 	var username=request.body.username;
 	var score=request.body.score;
 	var game_title=request.body.game_title;
 	var created_at=Date();
  	
-	db.collection("highscores", function(err, collection){
+	db.collection('highscores', function(err, collection){
 		collection.insert({'game_title':game_title, 'username': username, 'score':score, 'created_at': created_at});
 	});
-	response.set('Content-Type', 'text/html');
 	response.send();
 });
 
